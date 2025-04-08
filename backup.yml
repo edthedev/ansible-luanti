@@ -11,16 +11,32 @@
     world: "world"
     world_dir: "{{ luanti }}/worlds/{{ world }}"
     run_cmd: "flatpak run net.minetest.Minetest"
+    today: "{{ ansible_date_time.date }}"
   tasks:
-    - name: Daily backup
+    - name: Full Daily Backup
       archive:
         path: "{{ world_dir }}"
         dest: "{{ backup }}/luanti_{{ world }}.{{ ansible_date_time.date }}.zip"
         format: zip
       tags:
         - backup
+    - name: Backup Minetest.conf
+      copy:
+        src: "{{ luanti }}/minetest.conf"
+        dest: "{{ backup }}/minetest.{{ today }}.conf"
+      tags:
+        - backup
+        - conf
     - name: Save list of mods
-      shell: "ls {{ luanti }}/mods > modlist.{{ ansible_date_time.date }}.txt"
+      shell: "ls {{ luanti }}/mods > {{ backup }}/modlist.{{ ansible_date_time.date }}.txt"
       tags:
         - backup
         - mods
+        - conf
+    - name: Backup world.mt
+      copy:
+        src: "{{ world_dir }}/world.mt"
+        dest: "{{ backup }}/{{ world }}.{{ today }}.world.mt"
+      tags:
+        - backup
+        - conf

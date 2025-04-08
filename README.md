@@ -8,14 +8,16 @@ Examples
 
 Backup world files:
 
+> Tip: This may take a few minutes.
+
 ```sh
  ansible-playbook ./backup.yml --extra-vars "world=SurfaceWorld root=$HOME"
 ```
 
-## Backups
+Backup configuration files:
 
 ```sh
- ansible-playbook ./backup.yml --extra-vars "world=SurfaceWorld root=$HOME" --tags "backup"
+ ansible-playbook ./backup.yml --extra-vars "world=SurfaceWorld root=$HOME" --tags "conf"
 ```
 
 ## Generate Full Mod List
