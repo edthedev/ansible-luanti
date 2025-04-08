@@ -12,9 +12,21 @@ Backup world files:
  ansible-playbook ./backup.yml --extra-vars "world=SurfaceWorld root=$HOME"
 ```
 
+## Backups
+
+```sh
+ ansible-playbook ./backup.yml --extra-vars "world=SurfaceWorld root=$HOME" --tags "backup"
+```
+
+## Generate Full Mod List
+
+```sh
+ ansible-playbook ./backup.yml --extra-vars "world=SurfaceWorld root=$HOME" --tags "mods"
+```
+
 TODO
 ----
 
-- [ ] daily world backup
+- [x] daily world backup
 - [ ] enable/disable mod
 - [ ] generate world map
