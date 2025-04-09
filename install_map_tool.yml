@@ -1,0 +1,35 @@
+---
+- name: Generate Luanti Maps
+  gather_facts: yes
+  gather_subset:
+    - "env"
+  hosts: localhost
+  become: yes
+  vars:
+    root: "{{ ansible_env.HOME }}"
+    tools: "{{ root }}/bin"
+  tasks:
+    - name: Install map tool prerequisites
+      ansible.builtin.apt:
+        tags: foo
+        pkg: 
+          - cmake
+          - libgd-dev
+          - libhiredis-dev
+          - libleveldb-dev
+          - libpq-dev
+          - libsqlite3-dev
+          - zlib1g-dev
+          - libzstd-dev
+    - name: Install map tool
+      ansible.builtin.git:
+        repo: https://github.com/luanti-org/minetestmapper
+        path: "{{ tools }}"
+    - name: Build map tool 1/2
+      shell: 
+        cmd: "cmake . -DENABLE_LEVELDB=1"
+        chdir: "{{ tools }}/minetestmapper"
+    - name: Build map tool 2/2
+      shell: 
+        cmd: "make -j$(nproc)"
+        chdir: "{{ tools }}/minetestmapper"
