@@ -4,23 +4,12 @@
   gather_subset:
     - "env"
   hosts: localhost
-  become: yes
   vars:
     root: "{{ ansible_env.HOME }}"
     tools: "{{ root }}/bin"
   tasks:
     - name: Install map tool prerequisites
-      ansible.builtin.apt:
-        tags: foo
-        pkg: 
-          - cmake
-          - libgd-dev
-          - libhiredis-dev
-          - libleveldb-dev
-          - libpq-dev
-          - libsqlite3-dev
-          - zlib1g-dev
-          - libzstd-dev
+      shell: ./install_map_prerequisites.sh
     - name: Install map tool
       ansible.builtin.git:
         repo: https://github.com/luanti-org/minetestmapper

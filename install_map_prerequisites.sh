@@ -1,0 +1,1 @@
+sudo apt install -y cmake libgd-dev libhiredis-dev libleveldb-dev libpq-dev libsqlite3-dev zlib1g-dev libzstd-dev
